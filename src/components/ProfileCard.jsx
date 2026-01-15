@@ -5,41 +5,40 @@ const ProfileCard = ({ user }) => {
   if (!user) return null;
 
   return (
-    // CARD: Fundo sólido (bg-slate-900) para evitar bugs de transparência no download
+    // VOLTAMOS AO BÁSICO SÓLIDO: bg-slate-900 (sem transparência) para garantir o print
     <div className="w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl animate-fade-in-up mb-8">
       
       <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start text-center md:text-left">
         
-        {/* --- ÁREA DO AVATAR (Blindada contra filtro azul) --- */}
-        <div className="shrink-0">
-          {/* TRUQUE: Usamos uma div com gradiente e padding (p-1) para simular a borda.
-              Isso elimina o uso de 'absolute', que estava causando o filtro azul. */}
-          <div className="rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 p-1">
-            <img 
-              src={user.avatar_url} 
-              alt={user.name} 
-              crossOrigin="anonymous"
-              // Fundo slate-900 atrás da imagem para garantir que nada vaze
-              className="w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-slate-900 bg-slate-900 object-cover"
-            />
-          </div>
+        {/* --- ÁREA DO AVATAR --- */}
+        <div className="relative group shrink-0">
+          {/* Brilho atrás da foto (controlado) */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full opacity-75 blur-sm"></div>
+          
+          {/* FOTO: z-10 para ficar NA FRENTE de tudo, sem filtro azul */}
+          <img 
+            src={user.avatar_url} 
+            alt={user.name} 
+            crossOrigin="anonymous"
+            className="relative z-10 w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-slate-900 object-cover bg-slate-900"
+          />
         </div>
         
         {/* --- INFORMAÇÕES --- */}
         <div className="flex-1 w-full min-w-0">
           
-          {/* 1. NOME: Branco puro para contraste máximo */}
+          {/* 1. NOME: Branco puro, fonte grossa e espaçamento seguro */}
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-normal py-1 mb-2">
             {user.name || user.login}
           </h2>
           
-          {/* 2. USERNAME + DATA */}
+          {/* 2. USERNAME + DATA: Cores vivas (Azul 400) */}
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-6">
             <a 
                 href={user.html_url} 
                 target="_blank" 
                 rel="noreferrer" 
-                className="text-blue-400 hover:text-blue-300 transition-colors font-mono text-sm md:text-base font-bold tracking-wide"
+                className="text-blue-400 hover:text-blue-300 transition-colors font-mono text-sm md:text-base font-bold"
             >
                 @{user.login}
             </a>
@@ -53,12 +52,12 @@ const ProfileCard = ({ user }) => {
             </div>
           </div>
 
-          {/* BIO */}
+          {/* BIO: Cor clara (Slate 300) */}
           <p className="text-slate-300 leading-relaxed text-sm md:text-base mb-6 font-medium">
             {user.bio || "Este desenvolvedor prefere codar a escrever biografias."}
           </p>
 
-          {/* STATS: Fundo sólido escuro */}
+          {/* STATS: Fundo sólido escuro para contraste */}
           <div className="grid grid-cols-3 gap-2 bg-slate-950 p-4 rounded-xl border border-slate-800 w-full mb-6">
             <div className="text-center">
               <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Projetos</div>
@@ -74,7 +73,7 @@ const ProfileCard = ({ user }) => {
             </div>
           </div>
 
-          {/* FOOTER */}
+          {/* FOOTER: Ícones azuis vivos */}
           <div className="flex flex-wrap justify-center md:justify-start gap-5 text-sm text-slate-400 font-medium">
             {user.location && (
               <div className="flex items-center gap-1.5 py-1">
