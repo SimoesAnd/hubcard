@@ -1,7 +1,7 @@
 // src/components/ProfileCard.jsx
 import { MapPin, Calendar } from "lucide-react";
 
-const ProfileCard = ({ user }) => {
+const ProfileCard = ({ user, languages = [] }) => {
   if (!user) return null;
 
   return (
@@ -50,7 +50,6 @@ const ProfileCard = ({ user }) => {
                 @{user.login}
               </a>
 
-              {/* Ano só aparece a partir de sm */}
               <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-300 bg-slate-950 px-3 py-1.5 rounded-full">
                 <Calendar className="w-3.5 h-3.5 text-blue-500" />
                 <span>{new Date(user.created_at).getFullYear()}</span>
@@ -70,9 +69,33 @@ const ProfileCard = ({ user }) => {
               <Stat label="Seguindo" value={user.following} />
             </div>
 
+            {/* TOP LANGUAGES */}
+            {languages.length > 0 && (
+              <div className="mt-6">
+                <h3 className="text-sm font-semibold text-slate-400 mb-3 tracking-wide">
+                  Top Languages
+                </h3>
+
+                <div className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-3">
+                  {languages.map((lang) => (
+                    <div
+                      key={lang.name}
+                      className="flex items-center gap-2 text-sm text-slate-200"
+                    >
+                      <span
+                        className="w-2.5 h-2.5 rounded-full"
+                        style={{ backgroundColor: lang.color }}
+                      />
+                      <span className="font-medium">{lang.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* LOCAL */}
             {user.location && (
-              <div className="mt-5 flex justify-center md:justify-start items-center gap-2 text-sm text-slate-300">
+              <div className="mt-6 flex justify-center md:justify-start items-center gap-2 text-sm text-slate-300">
                 <MapPin className="w-4 h-4 text-blue-500" />
                 <span>{user.location}</span>
               </div>
