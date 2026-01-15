@@ -1,3 +1,4 @@
+// src/components/ProfileCard.jsx
 import { MapPin, Link as LinkIcon, Users, Calendar } from 'lucide-react';
 
 const ProfileCard = ({ user }) => {
@@ -11,9 +12,11 @@ const ProfileCard = ({ user }) => {
         {/* Avatar */}
         <div className="relative group shrink-0">
           <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 blur"></div>
+          {/* CORREÇÃO 1: Adicionado crossOrigin="anonymous" para o download funcionar */}
           <img 
             src={user.avatar_url} 
             alt={user.name} 
+            crossOrigin="anonymous"
             className="relative w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-slate-900 object-cover"
           />
         </div>
@@ -21,21 +24,15 @@ const ProfileCard = ({ user }) => {
         {/* Informações */}
         <div className="flex-1 w-full min-w-0">
           
-          {/* Header do Nome */}
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-2">
-            {/* CORREÇÃO: leading-normal e py-1 para não cortar acentos */}
-            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-normal py-1">
-              {user.name || user.login}
-            </h2>
-            
-            <div className="flex items-center gap-1 text-xs text-slate-500 bg-slate-950 px-3 py-1.5 rounded-full border border-slate-800 shrink-0 mt-1">
-              <Calendar className="w-3 h-3" />
-              <span>{new Date(user.created_at).getFullYear()}</span>
-            </div>
-          </div>
-
-          {/* Username */}
-          <div className="mb-4">
+          {/* CORREÇÃO 2: Layout do Cabeçalho Reformulado */}
+          
+          {/* 1. Nome Sozinho na linha de cima (Para alinhar perfeitamente) */}
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-normal py-1 mb-1">
+            {user.name || user.login}
+          </h2>
+          
+          {/* 2. Username + Ano na linha de baixo */}
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-4">
             <a 
                 href={user.html_url} 
                 target="_blank" 
@@ -44,9 +41,18 @@ const ProfileCard = ({ user }) => {
             >
                 @{user.login}
             </a>
+
+            {/* Separador visual (opcional) */}
+            <span className="hidden sm:inline text-slate-600">•</span>
+
+            {/* Badge de Data movido para cá */}
+            <div className="flex items-center gap-1 text-xs text-slate-500 bg-slate-950 px-3 py-1.5 rounded-full border border-slate-800 shrink-0">
+              <Calendar className="w-3 h-3" />
+              <span>{new Date(user.created_at).getFullYear()}</span>
+            </div>
           </div>
 
-          {/* Bio: leading-relaxed para as linhas não ficarem grudadas */}
+          {/* Bio */}
           <p className="text-slate-300 leading-relaxed text-sm md:text-base mb-6">
             {user.bio || "Este desenvolvedor prefere codar a escrever biografias."}
           </p>
