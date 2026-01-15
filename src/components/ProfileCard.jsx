@@ -4,6 +4,8 @@ import { MapPin, Calendar } from "lucide-react";
 const ProfileCard = ({ user, languages = [] }) => {
   if (!user) return null;
 
+  const total = languages.reduce((acc, l) => acc + l.value, 0);
+
   return (
     <section className="w-full max-w-6xl mx-auto px-4">
       <div className="bg-slate-900/95 rounded-2xl shadow-2xl ring-1 ring-slate-800/60 p-5 sm:p-7 md:p-10">
@@ -71,24 +73,46 @@ const ProfileCard = ({ user, languages = [] }) => {
 
             {/* TOP LANGUAGES */}
             {languages.length > 0 && (
-              <div className="mt-6">
-                <h3 className="text-sm font-semibold text-slate-400 mb-3 tracking-wide">
+              <div className="mt-8 bg-slate-950/60 rounded-xl p-5 ring-1 ring-slate-800">
+                <h3 className="text-sm font-semibold text-slate-200 mb-4 tracking-wide">
                   Top Languages
                 </h3>
 
-                <div className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-3">
-                  {languages.map((lang) => (
-                    <div
-                      key={lang.name}
-                      className="flex items-center gap-2 text-sm text-slate-200"
-                    >
-                      <span
-                        className="w-2.5 h-2.5 rounded-full"
-                        style={{ backgroundColor: lang.color }}
-                      />
-                      <span className="font-medium">{lang.name}</span>
-                    </div>
-                  ))}
+                <div className="space-y-3">
+                  {languages.map((lang) => {
+                    const percent = Math.round((lang.value / total) * 100);
+
+                    return (
+                      <div key={lang.name} className="space-y-1.5">
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="flex items-center gap-2 text-slate-200 font-medium">
+                            <span
+                              className="w-3 h-3 rounded-full shadow"
+                              style={{
+                                backgroundColor: lang.color,
+                                boxShadow: `0 0 8px ${lang.color}`,
+                              }}
+                            />
+                            {lang.name}
+                          </div>
+                          <span className="text-xs text-slate-400">
+                            {percent}%
+                          </span>
+                        </div>
+
+                        <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full rounded-full transition-all"
+                            style={{
+                              width: `${percent}%`,
+                              backgroundColor: lang.color,
+                              boxShadow: `0 0 10px ${lang.color}`,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
