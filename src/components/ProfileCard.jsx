@@ -11,49 +11,47 @@ const ProfileCard = ({ user }) => {
         
         {/* Avatar */}
         <div className="relative group shrink-0">
+          {/* Este é o brilho azul/ciano que fica ATRÁS da foto */}
           <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 blur"></div>
-          {/* CORREÇÃO 1: Adicionado crossOrigin="anonymous" para o download funcionar */}
+          
+          {/* CORREÇÃO: Adicionado 'z-10' para garantir que a foto fique na frente do brilho */}
           <img 
             src={user.avatar_url} 
             alt={user.name} 
             crossOrigin="anonymous"
-            className="relative w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-slate-900 object-cover"
+            className="relative z-10 w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-slate-900 object-cover"
           />
         </div>
         
         {/* Informações */}
         <div className="flex-1 w-full min-w-0">
           
-          {/* CORREÇÃO 2: Layout do Cabeçalho Reformulado */}
-          
-          {/* 1. Nome Sozinho na linha de cima (Para alinhar perfeitamente) */}
-          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-normal py-1 mb-1">
+          {/* Nome */}
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-normal py-1 mb-3">
             {user.name || user.login}
           </h2>
           
-          {/* 2. Username + Ano na linha de baixo */}
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-4">
+          {/* Username + Ano */}
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-5 mb-5">
             <a 
                 href={user.html_url} 
                 target="_blank" 
                 rel="noreferrer" 
-                className="text-blue-400 hover:text-blue-300 transition-colors font-mono text-sm md:text-base inline-block py-0.5"
+                className="text-blue-400 hover:text-blue-300 transition-colors font-mono text-sm md:text-base inline-block py-0.5 font-medium"
             >
                 @{user.login}
             </a>
 
-            {/* Separador visual (opcional) */}
             <span className="hidden sm:inline text-slate-600">•</span>
 
-            {/* Badge de Data movido para cá */}
-            <div className="flex items-center gap-1 text-xs text-slate-500 bg-slate-950 px-3 py-1.5 rounded-full border border-slate-800 shrink-0">
-              <Calendar className="w-3 h-3" />
+            <div className="flex items-center gap-2 text-xs text-slate-400 bg-slate-950 px-3 py-1.5 rounded-full border border-slate-800 shrink-0">
+              <Calendar className="w-3.5 h-3.5 text-blue-500" />
               <span>{new Date(user.created_at).getFullYear()}</span>
             </div>
           </div>
 
           {/* Bio */}
-          <p className="text-slate-300 leading-relaxed text-sm md:text-base mb-6">
+          <p className="text-slate-300 leading-relaxed text-sm md:text-base mb-6 font-light">
             {user.bio || "Este desenvolvedor prefere codar a escrever biografias."}
           </p>
 
@@ -74,7 +72,7 @@ const ProfileCard = ({ user }) => {
           </div>
 
           {/* Footer Infos */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-4 text-sm text-slate-400">
+          <div className="flex flex-wrap justify-center md:justify-start gap-5 text-sm text-slate-400">
             {user.location && (
               <div className="flex items-center gap-1.5 py-1">
                 <MapPin className="w-4 h-4 text-blue-500 shrink-0" /> <span>{user.location}</span>
