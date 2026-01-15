@@ -8,11 +8,9 @@ const ProfileCard = ({ user, languages = [] }) => {
 
   return (
     <section className="w-full max-w-6xl mx-auto px-4">
-      {/* AUMENTO: p-8 e md:p-12 (antes era p-5/p-10) para dar mais respiro interno */}
       <div className="bg-slate-900/95 rounded-2xl shadow-2xl ring-1 ring-slate-800/60 p-8 sm:p-10 md:p-14">
 
         {/* HEADER */}
-        {/* AUMENTO: gap-8 e md:gap-12 (afastar avatar do texto) */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
 
           {/* AVATAR */}
@@ -36,15 +34,15 @@ const ProfileCard = ({ user, languages = [] }) => {
           </div>
 
           {/* INFO */}
-          <div className="flex-1 w-full text-center md:text-left">
+          <div className="flex-1 w-full text-center md:text-left pt-2">
 
-            {/* NOME: Adicionado mb-3 para afastar do user */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-3">
+            {/* NOME: Aumentei mb-5 (margem) e leading-normal (altura da linha) para não encostar na data */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-normal mb-5">
               {user.name || user.login}
             </h1>
 
-            {/* USERNAME + ANO: Adicionado mb-6 para afastar da Bio */}
-            <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-6">
+            {/* USERNAME + ANO: mb-8 para afastar bem da Bio */}
+            <div className="flex flex-wrap justify-center md:justify-start items-center gap-5 mb-8">
               <a
                 href={user.html_url}
                 target="_blank"
@@ -60,26 +58,25 @@ const ProfileCard = ({ user, languages = [] }) => {
               </div>
             </div>
 
-            {/* BIO: Aumentei o leading (relaxed) e margem superior */}
+            {/* BIO */}
             <p className="text-slate-300 text-sm sm:text-base leading-loose max-w-2xl mx-auto md:mx-0">
               {user.bio || "Desenvolvedor focado em criar soluções eficientes e bem estruturadas."}
             </p>
 
-            {/* STATS: Aumentei margem superior (mt-10) */}
+            {/* STATS */}
             <div className="mt-10 grid grid-cols-3 bg-slate-950/70 rounded-2xl divide-x divide-slate-800 border border-slate-800/30">
               <Stat label="Projetos" value={user.public_repos} />
               <Stat label="Seguidores" value={user.followers} />
               <Stat label="Seguindo" value={user.following} />
             </div>
 
-            {/* TOP LANGUAGES: Aumentei margem superior (mt-10) e padding (p-6) */}
+            {/* TOP LANGUAGES */}
             {languages.length > 0 && (
               <div className="mt-10 bg-slate-950/60 rounded-2xl p-6 ring-1 ring-slate-800">
                 <h3 className="text-sm font-bold text-slate-400 mb-6 tracking-widest uppercase">
                   Top Languages
                 </h3>
 
-                {/* Aumentei o espaçamento entre as barras (space-y-5) */}
                 <div className="space-y-5">
                   {languages.map((lang) => {
                     const percent = Math.round((lang.value / total) * 100);
@@ -102,7 +99,6 @@ const ProfileCard = ({ user, languages = [] }) => {
                           </span>
                         </div>
 
-                        {/* Barra um pouco mais grossa (h-3) */}
                         <div className="h-3 w-full bg-slate-900 rounded-full overflow-hidden border border-slate-800/50">
                           <div
                             className="h-full rounded-full transition-all"
@@ -120,7 +116,7 @@ const ProfileCard = ({ user, languages = [] }) => {
               </div>
             )}
 
-            {/* LOCAL: Aumentei margem superior (mt-8) */}
+            {/* LOCAL */}
             {user.location && (
               <div className="mt-8 flex justify-center md:justify-start items-center gap-2 text-sm text-slate-400 font-medium">
                 <MapPin className="w-4 h-4 text-blue-500" />
@@ -134,7 +130,6 @@ const ProfileCard = ({ user, languages = [] }) => {
   );
 };
 
-// Aumentei o padding vertical (py-6) para os números não ficarem espremidos
 const Stat = ({ label, value }) => (
   <div className="py-6 text-center">
     <div className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-slate-500 font-bold mb-1">
